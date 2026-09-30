@@ -3,291 +3,1566 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Лаборатори 02: Хэрэглэгчийн анкет</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-50 font-sans text-slate-800 leading-relaxed min-h-screen flex flex-col">
+    <title>Оюутны Бүртгэлийн Портал</title>
 
-    <!-- Header Section -->
-    <header class="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-800 text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-4 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center space-x-3">
-                <div class="bg-white/10 p-2 rounded-lg backdrop-blur-sm">
-                    <svg class="w-6 h-6 text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
-                    </svg>
-                </div>
-                <h1 class="text-2xl font-extrabold tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-white to-indigo-100">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.80);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .card-hover {
+            transition: transform .25s ease,
+                        box-shadow .25s ease,
+                        border-color .25s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 40px rgba(79, 70, 229, .14);
+        }
+
+        .input-glow:focus {
+            box-shadow:
+                0 0 0 4px rgba(99, 102, 241, .12),
+                0 8px 24px rgba(99, 102, 241, .08);
+        }
+
+        .shine {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 60%;
+            height: 100%;
+            transform: skewX(-20deg);
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,.25),
+                transparent
+            );
+            transition: left .7s;
+        }
+
+        .shine:hover::after {
+            left: 140%;
+        }
+
+        .float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(
+                90deg,
+                #4f46e5,
+                #9333ea,
+                #ec4899
+            );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-title {
+            position: relative;
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 55px;
+            height: 4px;
+            margin-top: 9px;
+            border-radius: 999px;
+            background: linear-gradient(
+                90deg,
+                #6366f1,
+                #d946ef
+            );
+        }
+    </style>
+</head>
+
+
+<body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 font-sans text-slate-800 leading-relaxed min-h-screen flex flex-col">
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="bg-gradient-to-r from-indigo-700 via-purple-600 to-fuchsia-600 text-white shadow-2xl sticky top-0 z-50">
+
+    <div class="max-w-6xl mx-auto px-4 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
+
+        <div class="flex items-center space-x-3">
+
+            <div class="bg-white/15 p-3 rounded-xl backdrop-blur-sm">
+                <svg class="w-7 h-7 text-white"
+                     fill="none"
+                     stroke="currentColor"
+                     viewBox="0 0 24 24">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 14l9-5-9-5-9 5 9 5z"/>
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+                </svg>
+            </div>
+
+            <div>
+                <h1 class="text-xl md:text-2xl font-extrabold">
                     Оюутны Бүртгэлийн Портал
                 </h1>
+
+                <p class="text-xs text-indigo-100">
+                    Student Portal • 2026
+                </p>
             </div>
-            
-            <nav>
-                <ul class="flex space-x-1 sm:space-x-2 text-sm font-medium">
-                    <li><a href="./index.html" class="px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition duration-200">Нүүр</a></li>
-                    <li><a href="#" class="px-3 py-2 rounded-lg hover:bg-white/10 transition duration-200">Анкет засах</a></li>
-                    <li><a href="#" class="px-3 py-2 rounded-lg hover:bg-white/10 transition duration-200">Тусламж</a></li>
-                </ul>
-            </nav>
+
         </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="max-w-5xl mx-auto px-4 py-10 flex-grow w-full">
-        <article class="space-y-10">
-            
-            <!-- Profile Form Section -->
-            <section class="bg-white p-6 md:p-10 rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-100">
-                <div class="border-b border-slate-100 pb-5 mb-8">
-                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Хэрэглэгчийн Анкет Бөглөх</h2>
-                    <p class="text-slate-500 mt-1 text-sm">Доорх формын дагуу мэдээллээ бүрэн, үнэн зөв зааж бөглөнө үү.</p>
-                </div>
 
-                <form action="#" method="POST" enctype="multipart/form-data" class="space-y-8">
-                    
-                    <!-- Personal Info -->
-                    <fieldset class="border border-indigo-100 rounded-xl p-6 bg-gradient-to-br from-indigo-50/30 to-slate-50/50">
-                        <legend class="px-3 py-1 font-semibold text-indigo-700 text-xs uppercase tracking-wider bg-indigo-100/80 rounded-full border border-indigo-200">
-                            Хувийн мэдээлэл
-                        </legend>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4">
-                            <div>
-                                <label for="fullname" class="block text-sm font-semibold text-slate-700 mb-1.5">Овог нэр:</label>
-                                <input type="text" id="fullname" name="fullname" placeholder="И. Болдбаатар" required minlength="2"
-                                    class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-white shadow-sm">
-                            </div>
+        <nav>
+            <ul class="flex space-x-1 sm:space-x-2 text-sm font-medium">
 
-                            <div>
-                                <label for="email" class="block text-sm font-semibold text-slate-700 mb-1.5">Цахим хаяг (Email):</label>
-                                <input type="email" id="email" name="email" placeholder="example@domain.com" required
-                                    class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-white shadow-sm">
-                            </div>
+                <li>
+                    <a href="#home"
+                       class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/25 transition">
+                        Нүүр
+                    </a>
+                </li>
 
-                            <div>
-                                <label for="password" class="block text-sm font-semibold text-slate-700 mb-1.5">Нууц үг:</label>
-                                <input type="password" id="password" name="password" required minlength="6"
-                                    class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-white shadow-sm">
-                            </div>
+                <li>
+                    <a href="#form"
+                       class="px-4 py-2 rounded-lg hover:bg-white/15 transition">
+                        Анкет
+                    </a>
+                </li>
 
-                            <div>
-                                <label for="phone" class="block text-sm font-semibold text-slate-700 mb-1.5">Утасны дугаар:</label>
-                                <input type="tel" id="phone" name="phone" pattern="[0-9]{8}" placeholder="88112233" required
-                                    class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-white shadow-sm">
-                            </div>
+                <li>
+                    <a href="#interest"
+                       class="px-4 py-2 rounded-lg hover:bg-white/15 transition">
+                        Сонирхол
+                    </a>
+                </li>
 
-                            <div>
-                                <label for="dob" class="block text-sm font-semibold text-slate-700 mb-1.5">Төрсөн огноо:</label>
-                                <input type="date" id="dob" name="dob" required
-                                    class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-white shadow-sm text-slate-600">
-                            </div>
+                <li>
+                    <a href="#grades"
+                       class="px-4 py-2 rounded-lg hover:bg-white/15 transition">
+                        Дүн
+                    </a>
+                </li>
 
-                            <div>
-                                <span class="block text-sm font-semibold text-slate-700 mb-1.5">Хүйс:</span>
-                                <div class="flex items-center space-x-6 py-2.5 px-4 bg-white border border-slate-300 rounded-lg shadow-sm">
-                                    <label for="male" class="inline-flex items-center text-sm cursor-pointer font-medium text-slate-700 hover:text-indigo-600">
-                                        <input type="radio" id="male" name="gender" value="male" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
-                                        <span class="ml-2">Эрэгтэй</span>
-                                    </label>
-                                    <label for="female" class="inline-flex items-center text-sm cursor-pointer font-medium text-slate-700 hover:text-indigo-600">
-                                        <input type="radio" id="female" name="gender" value="female" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
-                                        <span class="ml-2">Эмэгтэй</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
+            </ul>
+        </nav>
 
-                    <!-- Education & Interests Form -->
-                    <fieldset class="border border-indigo-100 rounded-xl p-6 bg-gradient-to-br from-indigo-50/30 to-slate-50/50">
-                        <legend class="px-3 py-1 font-semibold text-indigo-700 text-xs uppercase tracking-wider bg-indigo-100/80 rounded-full border border-indigo-200">
-                            Боловсрол ба Сонирхол
-                        </legend>
-                        
-                        <div class="space-y-5 mt-4">
-                            <div>
-                                <label for="degree" class="block text-sm font-semibold text-slate-700 mb-1.5">Суралцаж буй түвшин:</label>
-                                <select id="degree" name="degree" required
-                                    class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-white shadow-sm">
-                                    <option value="">Сонгоно уу --</option>
-                                    <option value="bachelor">Бакалавр</option>
-                                    <option value="master">Магистр</option>
-                                    <option value="doctor">Докторант</option>
-                                </select>
-                            </div>
+    </div>
+</header>
 
-                            <div>
-                                <span class="block text-sm font-semibold text-slate-700 mb-2">Сонирхож буй технологиуд:</span>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 bg-white border border-slate-300 rounded-lg shadow-sm">
-                                    <label for="html" class="inline-flex items-center text-sm cursor-pointer hover:text-indigo-600">
-                                        <input type="checkbox" id="html" name="skills" value="HTML" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300">
-                                        <span class="ml-2.5 font-medium">HTML5 / CSS3</span>
-                                    </label>
-                                    <label for="js" class="inline-flex items-center text-sm cursor-pointer hover:text-indigo-600">
-                                        <input type="checkbox" id="js" name="skills" value="JavaScript" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300">
-                                        <span class="ml-2.5 font-medium">JavaScript</span>
-                                    </label>
-                                    <label for="php" class="inline-flex items-center text-sm cursor-pointer hover:text-indigo-600">
-                                        <input type="checkbox" id="php" name="skills" value="PHP" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300">
-                                        <span class="ml-2.5 font-medium">PHP &amp; MySQL</span>
-                                    </label>
-                                </div>
-                            </div>
 
-                            <div>
-                                <label for="avatar" class="block text-sm font-semibold text-slate-700 mb-1.5">Профайл зураг оруулна уу:</label>
-                                <input type="file" id="avatar" name="avatar" accept="image/*"
-                                    class="w-full text-sm text-slate-500 border border-slate-300 rounded-lg bg-white file:mr-4 file:py-2.5 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 transition cursor-pointer">
-                            </div>
 
-                            <div>
-                                <label for="bio" class="block text-sm font-semibold text-slate-700 mb-1.5">Товч танилцуулга / Өөрийн тухай:</label>
-                                <textarea id="bio" name="bio" rows="4" placeholder="Өөрийн танилцуулгыг энд бичнэ үү..."
-                                    class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-white shadow-sm"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
+<!-- ================= MAIN ================= -->
 
-                    <!-- Submit Buttons -->
-                    <div class="flex flex-wrap gap-4 pt-2">
-                        <button type="submit"
-                            class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-semibold text-sm rounded-lg shadow-md hover:shadow-lg transition-all duration-200">
-                            Анкет Илгээх
-                        </button>
-                        <button type="reset"
-                            class="px-6 py-3 bg-slate-200 hover:bg-slate-300 active:bg-slate-400 text-slate-700 font-semibold text-sm rounded-lg transition duration-200">
-                            Дахин эхлүүлэх
-                        </button>
-                    </div>
-                </form>
-            </section>
+<main id="home"
+      class="max-w-6xl mx-auto px-4 py-10 flex-grow w-full">
 
-            <!-- Expanded Interests Section -->
-            <section class="bg-white p-6 md:p-8 rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-100">
-                <div class="flex items-center space-x-3 mb-6 border-b border-slate-100 pb-4">
-                    <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.684a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                        </svg>
-                    </div>
-                    <h2 class="text-xl font-bold text-slate-900">Миний сонирхол ба Хобби</h2>
-                </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30 transition duration-200 flex items-start space-x-3">
-                        <span class="text-2xl">💻</span>
-                        <div>
-                            <h3 class="font-semibold text-slate-800 text-sm">Веб хөгжүүлэлт</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Frontend, Backend технологиуд</p>
-                        </div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30 transition duration-200 flex items-start space-x-3">
-                        <span class="text-2xl">📱</span>
-                        <div>
-                            <h3 class="font-semibold text-slate-800 text-sm">Mobile Апп</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Flutter, React Native</p>
-                        </div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30 transition duration-200 flex items-start space-x-3">
-                        <span class="text-2xl">🎨</span>
-                        <div>
-                            <h3 class="font-semibold text-slate-800 text-sm">UI/UX Дизайн</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Figma, Prototype хийх</p>
-                        </div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30 transition duration-200 flex items-start space-x-3">
-                        <span class="text-2xl">🤖</span>
-                        <div>
-                            <h3 class="font-semibold text-slate-800 text-sm">AI & Machine Learning</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Python, Data Science</p>
-                        </div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30 transition duration-200 flex items-start space-x-3">
-                        <span class="text-2xl">📷</span>
-                        <div>
-                            <h3 class="font-semibold text-slate-800 text-sm">Фото зураг авах</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Байгаль болон Хөрөг зураглал</p>
-                        </div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30 transition duration-200 flex items-start space-x-3">
-                        <span class="text-2xl">🎬</span>
-                        <div>
-                            <h3 class="font-semibold text-slate-800 text-sm">Кино үзэх</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Sci-Fi болон Баримтат кино</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+<!-- HERO -->
 
-            <!-- Grades Table Section -->
-            <section class="bg-white p-6 md:p-8 rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-100">
-                <div class="flex items-center space-x-3 mb-6 border-b border-slate-100 pb-4">
-                    <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
-                        </svg>
-                    </div>
-                    <h2 class="text-xl font-bold text-slate-900">Миний дүн ба Хичээлүүд</h2>
-                </div>
+<section class="mb-8 rounded-3xl
+                bg-gradient-to-r from-indigo-600 via-purple-600 to-fuchsia-500
+                text-white p-7 md:p-10
+                shadow-2xl shadow-indigo-200/50
+                overflow-hidden relative">
 
-                <div class="overflow-x-auto rounded-xl border border-slate-200">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-indigo-50/60 text-indigo-900">
-                                <th class="p-4 text-sm font-semibold border-b border-slate-200">Хичээлийн нэр</th>
-                                <th class="p-4 text-sm font-semibold border-b border-slate-200">Кредит</th>
-                                <th class="p-4 text-sm font-semibold border-b border-slate-200">Дүн (Оноо)</th>
-                                <th class="p-4 text-sm font-semibold border-b border-slate-200">Үнэлгээ</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100 text-sm">
-                            <tr class="hover:bg-slate-50 transition">
-                                <td class="p-4 font-medium text-slate-800">Веб зохиомж</td>
-                                <td class="p-4 text-slate-600">3 cr</td>
-                                <td class="p-4 font-semibold text-emerald-600">95</td>
-                                <td class="p-4"><span class="px-2.5 py-1 text-xs font-bold bg-emerald-100 text-emerald-700 rounded-full">A</span></td>
-                            </tr>
-                            <tr class="hover:bg-slate-50 transition">
-                                <td class="p-4 font-medium text-slate-800">Мэдээллийн сан</td>
-                                <td class="p-4 text-slate-600">3 cr</td>
-                                <td class="p-4 font-semibold text-emerald-600">88</td>
-                                <td class="p-4"><span class="px-2.5 py-1 text-xs font-bold bg-emerald-100 text-emerald-700 rounded-full">B+</span></td>
-                            </tr>
-                            <tr class="hover:bg-slate-50 transition">
-                                <td class="p-4 font-medium text-slate-800">Алгоритм ба Өгөгдлийн бүтэц</td>
-                                <td class="p-4 text-slate-600">4 cr</td>
-                                <td class="p-4 font-semibold text-emerald-600">92</td>
-                                <td class="p-4"><span class="px-2.5 py-1 text-xs font-bold bg-emerald-100 text-emerald-700 rounded-full">A-</span></td>
-                            </tr>
-                            <tr class="hover:bg-slate-50 transition">
-                                <td class="p-4 font-medium text-slate-800">UI/UX Дизайны үндэс</td>
-                                <td class="p-4 text-slate-600">2 cr</td>
-                                <td class="p-4 font-semibold text-emerald-600">96</td>
-                                <td class="p-4"><span class="px-2.5 py-1 text-xs font-bold bg-emerald-100 text-emerald-700 rounded-full">A</span></td>
-                            </tr>
-                            <tr class="hover:bg-slate-50 transition">
-                                <td class="p-4 font-medium text-slate-800">Python Програмчлал</td>
-                                <td class="p-4 text-slate-600">3 cr</td>
-                                <td class="p-4 font-semibold text-emerald-600">90</td>
-                                <td class="p-4"><span class="px-2.5 py-1 text-xs font-bold bg-emerald-100 text-emerald-700 rounded-full">A-</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+    <div class="absolute -right-12 -top-16
+                w-44 h-44 rounded-full bg-white/10">
+    </div>
 
-        </article>
-    </main>
+    <div class="absolute right-20 -bottom-20
+                w-56 h-56 rounded-full bg-white/10">
+    </div>
 
-    <!-- Footer Section -->
-    <footer class="bg-slate-900 text-slate-400 py-8 mt-16 border-t border-slate-800">
-        <div class="max-w-5xl mx-auto px-4 text-center text-sm space-y-2">
-            <p class="font-medium text-slate-300">&copy; 2026 Веб зохиомж хичээл. Бүх эрх хуулиар хамгаалагдсан.</p>
-            <p class="text-xs text-slate-500">Лабораторийн ажил №2 - Оюутны анкетын систем</p>
+
+    <div class="relative z-10
+                grid md:grid-cols-[1fr_auto]
+                gap-6 items-center">
+
+        <div>
+
+            <p class="text-indigo-100 text-sm font-semibold
+                      uppercase tracking-[.2em] mb-2">
+
+                STUDENT PORTAL • 2026
+
+            </p>
+
+
+            <h2 class="text-3xl md:text-5xl
+                       font-black tracking-tight">
+
+                Өөрийн профайлаа
+                <span class="text-yellow-200">
+                    илүү гоё
+                </span>
+                бүрдүүлээрэй ✨
+
+            </h2>
+
+
+            <p class="mt-4 text-indigo-100
+                      max-w-2xl text-sm md:text-base">
+
+                Хувийн мэдээлэл, боловсрол, сонирхол
+                болон хичээлийн амжилтаа нэг дороос
+                удирдах орчин.
+
+            </p>
+
+
+            <div class="mt-6 flex flex-wrap gap-3">
+
+                <a href="#form"
+                   class="px-5 py-3 bg-white
+                          text-indigo-700 font-bold
+                          rounded-xl hover:bg-indigo-50
+                          transition shadow-lg">
+
+                    📝 Анкет бөглөх
+
+                </a>
+
+                <a href="#grades"
+                   class="px-5 py-3
+                          bg-white/15 border border-white/25
+                          font-bold rounded-xl
+                          hover:bg-white/25 transition">
+
+                    📊 Дүн харах
+
+                </a>
+
+            </div>
+
         </div>
-    </footer>
+
+
+        <div class="float hidden md:flex
+                    w-28 h-28 rounded-3xl
+                    bg-white/15
+                    border border-white/25
+                    items-center justify-center
+                    text-6xl shadow-xl">
+
+            🎓
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= STATISTICS ================= -->
+
+<section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+
+
+    <div class="glass card-hover rounded-2xl
+                p-5 border border-indigo-100 shadow-lg">
+
+        <div class="text-3xl mb-2">📚</div>
+
+        <p class="text-xs text-slate-500 font-semibold">
+            Нийт хичээл
+        </p>
+
+        <p class="text-3xl font-black text-indigo-700">
+            5
+        </p>
+
+    </div>
+
+
+
+    <div class="glass card-hover rounded-2xl
+                p-5 border border-purple-100 shadow-lg">
+
+        <div class="text-3xl mb-2">⭐</div>
+
+        <p class="text-xs text-slate-500 font-semibold">
+            Дундаж оноо
+        </p>
+
+        <p class="text-3xl font-black text-purple-700">
+            92.2
+        </p>
+
+    </div>
+
+
+
+    <div class="glass card-hover rounded-2xl
+                p-5 border border-fuchsia-100 shadow-lg">
+
+        <div class="text-3xl mb-2">💡</div>
+
+        <p class="text-xs text-slate-500 font-semibold">
+            Сонирхол
+        </p>
+
+        <p class="text-3xl font-black text-fuchsia-700">
+            6
+        </p>
+
+    </div>
+
+
+
+    <div class="glass card-hover rounded-2xl
+                p-5 border border-emerald-100 shadow-lg">
+
+        <div class="text-3xl mb-2">🏆</div>
+
+        <p class="text-xs text-slate-500 font-semibold">
+            Онц дүн
+        </p>
+
+        <p class="text-3xl font-black text-emerald-600">
+            4
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<article class="space-y-10">
+
+
+
+<!-- ================= FORM ================= -->
+
+<section id="form"
+         class="bg-white/90
+                p-6 md:p-10
+                rounded-3xl
+                shadow-2xl shadow-indigo-100/60
+                border border-white card-hover">
+
+
+    <div class="border-b border-slate-100
+                pb-5 mb-8">
+
+        <h2 class="section-title
+                   text-2xl md:text-3xl
+                   font-bold text-slate-900">
+
+            Хэрэглэгчийн Анкет Бөглөх
+
+        </h2>
+
+
+        <p class="text-slate-500 mt-3 text-sm">
+
+            Доорх формын дагуу мэдээллээ
+            бүрэн, үнэн зөв бөглөнө үү.
+
+        </p>
+
+    </div>
+
+
+
+<form action="#"
+      method="POST"
+      enctype="multipart/form-data"
+      class="space-y-8">
+
+
+
+<!-- PERSONAL -->
+
+<fieldset class="border border-indigo-100
+                 rounded-2xl p-6
+                 bg-gradient-to-br
+                 from-indigo-50/70
+                 via-white
+                 to-purple-50/50
+                 shadow-sm card-hover">
+
+
+<legend class="px-4 py-2
+               font-bold text-indigo-700
+               text-xs uppercase
+               tracking-wider
+               bg-indigo-100
+               rounded-full
+               border border-indigo-200">
+
+    👤 Хувийн мэдээлэл
+
+</legend>
+
+
+
+<div class="grid grid-cols-1 md:grid-cols-2
+            gap-5 mt-4">
+
+
+
+<!-- NAME -->
+
+<div>
+
+<label for="fullname"
+       class="block text-sm font-semibold
+              text-slate-700 mb-2">
+
+    Овог нэр:
+
+</label>
+
+<input type="text"
+       id="fullname"
+       name="fullname"
+       placeholder="И. Болдбаатар"
+       required
+       minlength="2"
+
+       class="w-full px-4 py-3
+              border border-slate-300
+              rounded-xl
+              focus:outline-none
+              focus:ring-2
+              focus:ring-indigo-500
+              transition bg-white
+              shadow-sm input-glow">
+
+</div>
+
+
+
+<!-- EMAIL -->
+
+<div>
+
+<label for="email"
+       class="block text-sm font-semibold
+              text-slate-700 mb-2">
+
+    Цахим хаяг:
+
+</label>
+
+<input type="email"
+       id="email"
+       name="email"
+       placeholder="example@gmail.com"
+       required
+
+       class="w-full px-4 py-3
+              border border-slate-300
+              rounded-xl
+              focus:outline-none
+              focus:ring-2
+              focus:ring-indigo-500
+              transition bg-white
+              shadow-sm input-glow">
+
+</div>
+
+
+
+<!-- PASSWORD -->
+
+<div>
+
+<label for="password"
+       class="block text-sm font-semibold
+              text-slate-700 mb-2">
+
+    Нууц үг:
+
+</label>
+
+<input type="password"
+       id="password"
+       name="password"
+       placeholder="••••••••"
+       required
+       minlength="6"
+
+       class="w-full px-4 py-3
+              border border-slate-300
+              rounded-xl
+              focus:outline-none
+              focus:ring-2
+              focus:ring-indigo-500
+              transition bg-white
+              shadow-sm input-glow">
+
+</div>
+
+
+
+<!-- PHONE -->
+
+<div>
+
+<label for="phone"
+       class="block text-sm font-semibold
+              text-slate-700 mb-2">
+
+    Утасны дугаар:
+
+</label>
+
+<input type="tel"
+       id="phone"
+       name="phone"
+       pattern="[0-9]{8}"
+       placeholder="88112233"
+       required
+
+       class="w-full px-4 py-3
+              border border-slate-300
+              rounded-xl
+              focus:outline-none
+              focus:ring-2
+              focus:ring-indigo-500
+              transition bg-white
+              shadow-sm input-glow">
+
+</div>
+
+
+
+<!-- DOB -->
+
+<div>
+
+<label for="dob"
+       class="block text-sm font-semibold
+              text-slate-700 mb-2">
+
+    Төрсөн огноо:
+
+</label>
+
+<input type="date"
+       id="dob"
+       name="dob"
+       required
+
+       class="w-full px-4 py-3
+              border border-slate-300
+              rounded-xl
+              focus:outline-none
+              focus:ring-2
+              focus:ring-indigo-500
+              transition bg-white
+              shadow-sm input-glow">
+
+</div>
+
+
+
+<!-- GENDER -->
+
+<div>
+
+<span class="block text-sm font-semibold
+             text-slate-700 mb-2">
+
+    Хүйс:
+
+</span>
+
+<div class="flex items-center
+            space-x-6
+            py-3 px-4
+            bg-white
+            border border-slate-300
+            rounded-xl shadow-sm">
+
+<label class="inline-flex items-center
+              text-sm cursor-pointer
+              font-medium">
+
+<input type="radio"
+       name="gender"
+       value="male"
+       class="w-4 h-4
+              text-indigo-600">
+
+<span class="ml-2">
+    Эрэгтэй
+</span>
+
+</label>
+
+
+<label class="inline-flex items-center
+              text-sm cursor-pointer
+              font-medium">
+
+<input type="radio"
+       name="gender"
+       value="female"
+       class="w-4 h-4
+              text-indigo-600">
+
+<span class="ml-2">
+    Эмэгтэй
+</span>
+
+</label>
+
+</div>
+
+</div>
+
+</div>
+
+</fieldset>
+
+
+
+<!-- ================= EDUCATION ================= -->
+
+<fieldset class="border border-purple-100
+                 rounded-2xl p-6
+                 bg-gradient-to-br
+                 from-purple-50/70
+                 via-white
+                 to-fuchsia-50/50
+                 shadow-sm card-hover">
+
+
+<legend class="px-4 py-2
+               font-bold text-purple-700
+               text-xs uppercase
+               tracking-wider
+               bg-purple-100
+               rounded-full
+               border border-purple-200">
+
+    🎓 Боловсрол ба Сонирхол
+
+</legend>
+
+
+
+<div class="space-y-6 mt-4">
+
+
+
+<!-- DEGREE -->
+
+<div>
+
+<label for="degree"
+       class="block text-sm font-semibold
+              text-slate-700 mb-2">
+
+    Суралцаж буй түвшин:
+
+</label>
+
+<select id="degree"
+        name="degree"
+        required
+
+        class="w-full px-4 py-3
+               border border-slate-300
+               rounded-xl
+               focus:outline-none
+               focus:ring-2
+               focus:ring-purple-500
+               bg-white shadow-sm
+               transition input-glow">
+
+<option value="">
+    Сонгоно уу
+</option>
+
+<option value="bachelor">
+    Бакалавр
+</option>
+
+<option value="master">
+    Магистр
+</option>
+
+<option value="doctor">
+    Докторант
+</option>
+
+</select>
+
+</div>
+
+
+
+<!-- SKILLS -->
+
+<div>
+
+<span class="block text-sm font-semibold
+             text-slate-700 mb-3">
+
+    Сонирхож буй технологиуд:
+
+</span>
+
+
+<div class="grid grid-cols-1
+            sm:grid-cols-3 gap-3
+            p-4 bg-white
+            border border-slate-300
+            rounded-xl shadow-sm">
+
+
+<label class="flex items-center
+              p-3 rounded-lg
+              hover:bg-indigo-50
+              cursor-pointer transition">
+
+<input type="checkbox"
+       name="skills"
+       value="HTML"
+       class="w-4 h-4">
+
+<span class="ml-3 font-medium">
+    🌐 HTML5 / CSS3
+</span>
+
+</label>
+
+
+
+<label class="flex items-center
+              p-3 rounded-lg
+              hover:bg-yellow-50
+              cursor-pointer transition">
+
+<input type="checkbox"
+       name="skills"
+       value="JavaScript"
+       class="w-4 h-4">
+
+<span class="ml-3 font-medium">
+    ⚡ JavaScript
+</span>
+
+</label>
+
+
+
+<label class="flex items-center
+              p-3 rounded-lg
+              hover:bg-purple-50
+              cursor-pointer transition">
+
+<input type="checkbox"
+       name="skills"
+       value="PHP"
+       class="w-4 h-4">
+
+<span class="ml-3 font-medium">
+    🐘 PHP & MySQL
+</span>
+
+</label>
+
+</div>
+
+</div>
+
+
+
+<!-- IMAGE -->
+
+<div>
+
+<label for="avatar"
+       class="block text-sm font-semibold
+              text-slate-700 mb-2">
+
+    Профайл зураг оруулна уу:
+
+</label>
+
+<input type="file"
+       id="avatar"
+       name="avatar"
+       accept="image/*"
+
+       class="w-full text-sm
+              text-slate-500
+              border border-slate-300
+              rounded-xl bg-white
+              file:mr-4
+              file:py-3
+              file:px-5
+              file:rounded-l-xl
+              file:border-0
+              file:font-semibold
+              file:bg-indigo-50
+              file:text-indigo-700
+              hover:file:bg-indigo-100
+              transition cursor-pointer">
+
+</div>
+
+
+
+<!-- BIO -->
+
+<div>
+
+<label for="bio"
+       class="block text-sm font-semibold
+              text-slate-700 mb-2">
+
+    Товч танилцуулга:
+
+</label>
+
+<textarea id="bio"
+          name="bio"
+          rows="5"
+          placeholder="Өөрийн тухай товч танилцуулгаа энд бичнэ үү..."
+
+          class="w-full px-4 py-3
+                 border border-slate-300
+                 rounded-xl
+                 focus:outline-none
+                 focus:ring-2
+                 focus:ring-purple-500
+                 transition bg-white
+                 shadow-sm input-glow"></textarea>
+
+</div>
+
+</div>
+
+</fieldset>
+
+
+
+<!-- BUTTONS -->
+
+<div class="flex flex-wrap gap-4 pt-2">
+
+<button type="submit"
+
+        class="px-7 py-3.5
+               bg-gradient-to-r
+               from-indigo-600
+               via-purple-600
+               to-fuchsia-600
+               hover:from-indigo-700
+               hover:via-purple-700
+               hover:to-fuchsia-700
+               active:scale-95
+               text-white font-bold
+               rounded-xl shadow-lg
+               hover:shadow-xl
+               transition-all duration-200
+               shine">
+
+    🚀 Анкет Илгээх
+
+</button>
+
+
+<button type="reset"
+
+        class="px-7 py-3.5
+               bg-slate-100
+               hover:bg-slate-200
+               active:scale-95
+               text-slate-700
+               font-bold
+               rounded-xl
+               transition
+               border border-slate-200">
+
+    🔄 Дахин эхлүүлэх
+
+</button>
+
+</div>
+
+</form>
+
+</section>
+
+
+
+<!-- ================= INTEREST ================= -->
+
+<section id="interest"
+         class="bg-white/90
+                p-6 md:p-8
+                rounded-3xl
+                shadow-2xl shadow-indigo-100/60
+                border border-white
+                card-hover">
+
+
+<div class="flex items-center
+            space-x-3 mb-6
+            border-b border-slate-100
+            pb-4">
+
+<div class="p-3
+            bg-gradient-to-br
+            from-pink-100 to-purple-100
+            text-purple-600
+            rounded-xl text-2xl">
+
+    ❤️
+
+</div>
+
+<div>
+
+<h2 class="text-2xl font-bold">
+    Миний сонирхол ба Хобби
+</h2>
+
+<p class="text-sm text-slate-500">
+    Чөлөөт цагаараа хийх дуртай зүйлс
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="grid grid-cols-1
+            sm:grid-cols-2
+            md:grid-cols-3 gap-4">
+
+
+
+<div class="card-hover p-5 rounded-2xl
+            bg-gradient-to-br
+            from-blue-50 to-indigo-50
+            border border-blue-100">
+
+<span class="text-4xl">
+    💻
+</span>
+
+<h3 class="font-bold mt-3">
+    Веб хөгжүүлэлт
+</h3>
+
+<p class="text-xs text-slate-500 mt-1">
+    Frontend, Backend технологиуд
+</p>
+
+</div>
+
+
+
+<div class="card-hover p-5 rounded-2xl
+            bg-gradient-to-br
+            from-green-50 to-emerald-50
+            border border-green-100">
+
+<span class="text-4xl">
+    📱
+</span>
+
+<h3 class="font-bold mt-3">
+    Mobile Апп
+</h3>
+
+<p class="text-xs text-slate-500 mt-1">
+    Flutter, React Native
+</p>
+
+</div>
+
+
+
+<div class="card-hover p-5 rounded-2xl
+            bg-gradient-to-br
+            from-pink-50 to-fuchsia-50
+            border border-pink-100">
+
+<span class="text-4xl">
+    🎨
+</span>
+
+<h3 class="font-bold mt-3">
+    UI/UX Дизайн
+</h3>
+
+<p class="text-xs text-slate-500 mt-1">
+    Figma, Prototype хийх
+</p>
+
+</div>
+
+
+
+<div class="card-hover p-5 rounded-2xl
+            bg-gradient-to-br
+            from-yellow-50 to-orange-50
+            border border-yellow-100">
+
+<span class="text-4xl">
+    🤖
+</span>
+
+<h3 class="font-bold mt-3">
+    AI & Machine Learning
+</h3>
+
+<p class="text-xs text-slate-500 mt-1">
+    Python, Data Science
+</p>
+
+</div>
+
+
+
+<div class="card-hover p-5 rounded-2xl
+            bg-gradient-to-br
+            from-cyan-50 to-blue-50
+            border border-cyan-100">
+
+<span class="text-4xl">
+    📷
+</span>
+
+<h3 class="font-bold mt-3">
+    Фото зураг авах
+</h3>
+
+<p class="text-xs text-slate-500 mt-1">
+    Байгаль болон хөрөг зураглал
+</p>
+
+</div>
+
+
+
+<div class="card-hover p-5 rounded-2xl
+            bg-gradient-to-br
+            from-red-50 to-rose-50
+            border border-red-100">
+
+<span class="text-4xl">
+    🎬
+</span>
+
+<h3 class="font-bold mt-3">
+    Кино үзэх
+</h3>
+
+<p class="text-xs text-slate-500 mt-1">
+    Sci-Fi болон баримтат кино
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ================= GRADES ================= -->
+
+<section id="grades"
+         class="bg-white/90
+                p-6 md:p-8
+                rounded-3xl
+                shadow-2xl shadow-indigo-100/60
+                border border-white
+                card-hover">
+
+
+<div class="flex items-center
+            space-x-3 mb-6
+            border-b border-slate-100
+            pb-4">
+
+<div class="p-3
+            bg-gradient-to-br
+            from-indigo-100 to-purple-100
+            rounded-xl text-2xl">
+
+    🏆
+
+</div>
+
+<div>
+
+<h2 class="text-2xl font-bold">
+    Миний дүн ба Хичээлүүд
+</h2>
+
+<p class="text-sm text-slate-500">
+    Хичээл тус бүрийн үнэлгээ
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="overflow-x-auto
+            rounded-2xl
+            border border-slate-200">
+
+<table class="w-full text-left
+              border-collapse">
+
+
+<thead>
+
+<tr class="bg-gradient-to-r
+           from-indigo-50
+           via-purple-50
+           to-fuchsia-50
+           text-indigo-900">
+
+<th class="p-4 text-sm font-bold
+           border-b">
+    Хичээлийн нэр
+</th>
+
+<th class="p-4 text-sm font-bold
+           border-b">
+    Кредит
+</th>
+
+<th class="p-4 text-sm font-bold
+           border-b">
+    Дүн
+</th>
+
+<th class="p-4 text-sm font-bold
+           border-b">
+    Үнэлгээ
+</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody class="divide-y
+             divide-slate-100 text-sm">
+
+
+
+<tr class="hover:bg-indigo-50/50 transition">
+
+<td class="p-4 font-semibold">
+    Веб зохиомж
+</td>
+
+<td class="p-4 text-slate-600">
+    3 cr
+</td>
+
+<td class="p-4 font-bold text-indigo-600">
+    95
+</td>
+
+<td class="p-4">
+<span class="px-3 py-1
+             text-xs font-bold
+             bg-emerald-100
+             text-emerald-700
+             rounded-full">
+
+    A
+
+</span>
+</td>
+
+</tr>
+
+
+
+<tr class="hover:bg-purple-50/50 transition">
+
+<td class="p-4 font-semibold">
+    Мэдээллийн сан
+</td>
+
+<td class="p-4 text-slate-600">
+    3 cr
+</td>
+
+<td class="p-4 font-bold text-purple-600">
+    88
+</td>
+
+<td class="p-4">
+
+<span class="px-3 py-1
+             text-xs font-bold
+             bg-blue-100
+             text-blue-700
+             rounded-full">
+
+    B+
+
+</span>
+
+</td>
+
+</tr>
+
+
+
+<tr class="hover:bg-fuchsia-50/50 transition">
+
+<td class="p-4 font-semibold">
+    Алгоритм ба Өгөгдлийн бүтэц
+</td>
+
+<td class="p-4 text-slate-600">
+    4 cr
+</td>
+
+<td class="p-4 font-bold text-fuchsia-600">
+    92
+</td>
+
+<td class="p-4">
+
+<span class="px-3 py-1
+             text-xs font-bold
+             bg-emerald-100
+             text-emerald-700
+             rounded-full">
+
+    A-
+
+</span>
+
+</td>
+
+</tr>
+
+
+
+<tr class="hover:bg-indigo-50/50 transition">
+
+<td class="p-4 font-semibold">
+    UI/UX Дизайны үндэс
+</td>
+
+<td class="p-4 text-slate-600">
+    2 cr
+</td>
+
+<td class="p-4 font-bold text-indigo-600">
+    96
+</td>
+
+<td class="p-4">
+
+<span class="px-3 py-1
+             text-xs font-bold
+             bg-emerald-100
+             text-emerald-700
+             rounded-full">
+
+    A
+
+</span>
+
+</td>
+
+</tr>
+
+
+
+<tr class="hover:bg-purple-50/50 transition">
+
+<td class="p-4 font-semibold">
+    Python Програмчлал
+</td>
+
+<td class="p-4 text-slate-600">
+    3 cr
+</td>
+
+<td class="p-4 font-bold text-purple-600">
+    90
+</td>
+
+<td class="p-4">
+
+<span class="px-3 py-1
+             text-xs font-bold
+             bg-emerald-100
+             text-emerald-700
+             rounded-full">
+
+    A-
+
+</span>
+
+</td>
+
+</tr>
+
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+<!-- ================= ACHIEVEMENT ================= -->
+
+<section class="rounded-3xl
+                bg-slate-900
+                text-white
+                p-7 md:p-9
+                shadow-2xl
+                overflow-hidden
+                relative">
+
+
+<div class="absolute -right-10 -top-10
+            w-40 h-40 rounded-full
+            bg-purple-500/20">
+</div>
+
+
+<div class="relative z-10
+            grid md:grid-cols-2
+            gap-8 items-center">
+
+
+<div>
+
+<p class="text-indigo-300
+          text-sm font-bold
+          uppercase tracking-widest">
+
+    Амжилтын тойм
+
+</p>
+
+
+<h2 class="text-2xl md:text-3xl
+           font-black mt-2">
+
+    Суралцах ахиц амжилтаа
+    үргэлжлүүлээрэй 🚀
+
+</h2>
+
+
+<p class="text-slate-400 mt-3 text-sm">
+
+    Таны бүртгэлд байгаа мэдээлэл
+    болон хичээлийн дүнг нэг дороос
+    харах боломжтой.
+
+</p>
+
+</div>
+
+
+
+<div class="space-y-5">
+
+
+
+<div>
+
+<div class="flex justify-between
+            text-sm mb-2">
+
+<span>
+    Суралцах идэвх
+</span>
+
+<span>
+    92%
+</span>
+
+</div>
+
+
+<div class="h-3 bg-white/10
+            rounded-full overflow-hidden">
+
+<div class="h-full w-[92%]
+            bg-gradient-to-r
+            from-indigo-400
+            to-fuchsia-400
+            rounded-full">
+</div>
+
+</div>
+
+</div>
+
+
+
+<div>
+
+<div class="flex justify-between
+            text-sm mb-2">
+
+<span>
+    Хичээлийн гүйцэтгэл
+</span>
+
+<span>
+    88%
+</span>
+
+</div>
+
+
+<div class="h-3 bg-white/10
+            rounded-full overflow-hidden">
+
+<div class="h-full w-[88%]
+            bg-gradient-to-r
+            from-purple-400
+            to-pink-400
+            rounded-full">
+</div>
+
+</div>
+
+</div>
+
+
+
+<div>
+
+<div class="flex justify-between
+            text-sm mb-2">
+
+<span>
+    Профайл бүрдүүлэлт
+</span>
+
+<span>
+    75%
+</span>
+
+</div>
+
+
+<div class="h-3 bg-white/10
+            rounded-full overflow-hidden">
+
+<div class="h-full w-[75%]
+            bg-gradient-to-r
+            from-fuchsia-400
+            to-rose-400
+            rounded-full">
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+</article>
+
+</main>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="bg-slate-950
+               text-slate-400
+               py-8 mt-16
+               border-t
+               border-slate-800">
+
+<div class="max-w-6xl mx-auto
+            px-4 text-center
+            space-y-2">
+
+<p class="font-semibold
+          text-slate-300">
+
+    © 2026 Оюутны Бүртгэлийн Портал
+
+</p>
+
+<p class="text-xs text-slate-500">
+
+    Лабораторийн ажил №2
+    • Оюутны анкетын систем
+
+</p>
+
+</div>
+
+</footer>
+
 
 </body>
 </html>
